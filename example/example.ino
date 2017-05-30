@@ -9,27 +9,30 @@ const int BAUD_RATE = 9600;
 
 #define PIN 9
 #define NUM_LEDS 240
+#define BRIGHTNESS 255
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_GRBW + NEO_KHZ800);
 
-uint32_t input = 4278190080; //WHITE
-uint32_t previousInput = input;
+uint8_t input0 = 0; //RED
+uint8_t input1 = 0; //GREEN
+uint8_t input2 = 0; //BLUE
+uint8_t input3 = 0; //WHITE
 
 void setup() {
-  
   Serial.begin(BAUD_RATE);
-//  attach_callbacks();    
   Serial.println("White is Up");
   strip.begin();
-  colorWipe(input); //WHITE
+  colorWipe(strip.Color(input0,input1,input2,input3));
 }
 
 void loop() {
 
-  if(Serial.available()>0){
-    previousInput = input;
-    input = Serial.parseInt();
-    colorWipe(input); //WHITE
+  if(Serial.available()>=4){
+    input0 = Serial.read();
+    input1 = Serial.read();
+    input2 = Serial.read();
+    input3 = Serial.read();    
+    colorWipe(strip.Color(input0,input1,input2,input3)); //WHITE
   }
 }
 
