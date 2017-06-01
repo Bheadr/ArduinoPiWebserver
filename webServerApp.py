@@ -12,6 +12,12 @@ output3 = 0 	 #W
 
 #	DEFINE SET COLOR FUNCTION
 def setArduinoColor(colorInput):
+	#	INITIALIZE SERIAL BUS
+	try:
+		ser = serial.Serial('/dev/ttyACM0') #OPEN SERIAL PORT
+		ser.baudrate = 9600
+	except Exception as e:
+		print(e)
 	#	CONVERT HEX COLOR TO RGB
 	value = colorInput.lstrip('#')
 	lv = len(value)
@@ -31,15 +37,10 @@ def setArduinoColor(colorInput):
 	ser.close()
 	return
 
-#	INITIALIZE SERIAL BUS
-try:
-	ser = serial.Serial('/dev/ttyACM0') #OPEN SERIAL PORT
-	ser.baudrate = 9600
-except Exception as e:
-	print(e)
 
 #	INITIALIZE FLASK WEB SERVER
 app = Flask(__name__)
+#app.config['DEBUG'] = True
 
 @app.route('/', methods = ['POST', 'GET'])
 
