@@ -20,7 +20,6 @@ uint8_t input3 = 0; //WHITE
 
 void setup() {
   Serial.begin(BAUD_RATE);
-  Serial.println("White is Up");
   strip.begin();
   colorWipe(strip.Color(input0,input1,input2,input3));
 }
@@ -41,7 +40,7 @@ void colorWipe(uint32_t color) {
     strip.setPixelColor(i, color);
     strip.show();
   }
-  Serial.println(color);
-  Serial.println("Complete");
+//  Serial.println(color);
+//  Serial.println("Complete");
 }
 
